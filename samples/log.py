@@ -21,4 +21,14 @@ fp = logging.FileHandler('test.log','a',encoding='utf-8')
 # fp.setLevel(logging.DEBUG)
 fp.setFormatter(format)
 logger.addHandler(fp)
+
+
+# 创建流对象
+sp = logging.StreamHandler()
+sp.setFormatter(format)
+logger.addHandler(sp)
+logger.setLevel(logging.DEBUG)
+
 logger.info('文件记录日志')
+
+
