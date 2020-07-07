@@ -1,8 +1,9 @@
 import os
 import xlrd
+from common.configutils import config_utils
 
 current_path = os.path.dirname(__file__)
-excel_path = os.path.join(current_path,'..','data//test_case.xlsx')
+excel_path = os.path.join(current_path,'..',config_utils.TEST_CASE_DATA_PATH)
 
 
 class ExcelUtils:
