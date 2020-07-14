@@ -1,5 +1,7 @@
 #coding:utf-8
+import re
 
+import jsonpath as jsonpath
 import requests
 import ast
 from  common.configutils import config_utils
@@ -10,6 +12,7 @@ class RequestUtils:
         self.session = requests.session()
         self.url = config_utils.HOST
         self.headers = {"ContentType":"application/json;charset=utf-8"}
+        self.temp_variables = {}
 
     def __get(self,test_info):
         url = self.host + test_info['请求地址']
@@ -19,6 +22,16 @@ class RequestUtils:
         req_get = self.session.get(url= url,
                                params = params)
         req_get.encoding = req_get.apparent_encoding
+        # 通过excel表中关联取值的方式获取关联的值放到一个临时字典中
+        if test_info['取值方式']=='json取值':
+            value = jsonpath.jsonpath(req_get.json(),test_info["取值代码"])[0]
+            self.temp_variables[test_info["传值变量"]] = value
+            # print(self.temp_variables)
+        elif test_info['取值方式']=='正则取值':
+            value = re.findall(test_info["取值代码"],req_get.text)[0]
+            self.temp_variables[test_info["传值变量"]] = value
+            # print(self.temp_variables)
+
         res_get = {
             'code':0,  #请求是否成功的标志位
             'response_reason':req_get.reason,
@@ -40,6 +53,14 @@ class RequestUtils:
                                data =data ,
                                headers = self.headers
                                 )
+        if test_info['取值方式']=='json取值':
+            value = jsonpath.jsonpath(req_post.json(),test_info["取值代码"])[0]
+            self.temp_variables[test_info["传值变量"]] = value
+            # print(self.temp_variables)
+        elif test_info['取值方式']=='正则取值':
+            value = re.findall(test_info["取值代码"],req_post.text)[0]
+            self.temp_variables[test_info["传值变量"]] = value
+            # print(self.temp_variables)
         req_post.encoding = req_post.apparent_encoding
         res_post = {
             'code':0,  #请求是否成功的标志位
