@@ -17,7 +17,6 @@ class RequestUtils:
 
     def __get(self, test_info):
         url = self.host + test_info['请求地址']
-        print(url)
         # 将取出来的字符串数据去掉字符串标志，请求中需要上送的是字典形式
         params = ast.literal_eval(test_info['请求参数(get)'])
         req_get = self.session.get(url=url,
@@ -45,23 +44,21 @@ class RequestUtils:
     def __post(self, test_info):
         url = self.host + test_info['请求地址']
         # 将取出来的字符串数据去掉字符串标志，请求中需要上送的是字典形式
-        param = test_info['请求参数(get)']
-        # json = ast.literal_eval(test_info['提交数据（post）'])
+        param = ast.literal_eval(test_info['请求参数(get)'])
         data = test_info['提交数据（post）']
-        data = data.encode("utf-8").decode("latin1")
+        # data = data.encode("utf-8").decode("latin1")
         req_post = self.session.post(url=url,
                                      params=param,
                                      data=data,
                                      headers=self.headers
                                      )
+        req_post.encoding = req_post.apparent_encoding
         if test_info['取值方式'] == 'json取值':
             value = jsonpath.jsonpath(req_post.json(), test_info["取值代码"])[0]
             self.temp_variables[test_info["传值变量"]] = value
-            # print(self.temp_variables)
         elif test_info['取值方式'] == '正则取值':
             value = re.findall(test_info["取值代码"], req_post.text)[0]
             self.temp_variables[test_info["传值变量"]] = value
-            # print(self.temp_variables)
         req_post.encoding = req_post.apparent_encoding
         res_post = {
             'code': 0,  # 请求是否成功的标志位
@@ -74,6 +71,7 @@ class RequestUtils:
 
     # 将请求方式进行封装
     def request(self, test_info):
+        # print(self.temp_variables)
         request_method = test_info['请求方式']
         param_variable_list = re.findall('\\${\w+}', test_info["请求参数(get)"])
         if param_variable_list:
@@ -81,7 +79,6 @@ class RequestUtils:
                 # print('"%s"'%(self.temp_variables.get(param_variable[2:-1])))
                 test_info["请求参数(get)"] = test_info["请求参数(get)"].replace(param_variable, '"%s"' % (
                     self.temp_variables.get(param_variable[2:-1])))
-                # print(test_info["请求参数(get)"])
         if request_method == 'get':
             result = self.__get(test_info)
         elif request_method == 'post':
@@ -102,42 +99,17 @@ class RequestUtils:
             result = self.request(step)
             if result['code'] != 0:
                 break
-                print(result['response_body'])
+            print(result['response_body'])
         return result
 
 
 if __name__ == '__main__':
     request_util = RequestUtils()
-    print(request_util.test_steps([
-        {
-            '期望结果类型': '正则匹配',
-            '请求方式': 'get',
-            '请求地址': '/cgi-bin/token',
-            '用例执行': '否',
-            '测试用例编号': 'case02',
-            '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}',
-            '提交数据（post）': '',
-            '取值方式': 'json取值',
-            '测试用例名称': '测试能否正确新增用户标签',
-            '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}',
-            '取值代码': '$.access_token',
-            '传值变量': 'token',
-            '测试用例步骤': 'step_01',
-            '接口名称': '获取access_token接口'
-        },
-        {
-            '期望结果类型': '正则匹配',
-            '请求方式': 'post',
-            '请求地址': '/cgi-bin/tags/create',
-            '用例执行': '否',
-            '测试用例编号': 'case02',
-            '期望结果': '{"tag":{"id":(.+?),"name":"衡东8888"}}',
-            '提交数据（post）': '{"tag" : {"name" : "衡东8888"}}',
-            '取值方式': '无',
-            '测试用例名称': '测试能否正确新增用户标签',
-            '请求参数(get)': '{{"access_token":${token}}}',
-            '取值代码': '',
-            '传值变量': '',
-            '测试用例步骤': 'step_02',
-            '接口名称': '创建标签接口'
-        }]))
+    case_info = [
+        {'请求方式': 'get', '请求地址': '/cgi-bin/token',
+         '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}',
+         '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token'},
+        {'请求方式': 'post', '请求地址': '/cgi-bin/tags/delete', '请求参数(get)': '{"access_token":${token}}',
+         '提交数据（post）': '{"tag":{"id":459}}', '取值方式': '无', '传值变量': '', '取值代码': ''}
+    ]
+    case = request_util.test_steps(case_info)
