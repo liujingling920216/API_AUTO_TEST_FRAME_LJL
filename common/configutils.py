@@ -25,6 +25,11 @@ class ConfigUtils:
         log_lever = self.conf.get('log','LOG_LEVER')
         return log_lever
 
+    @property
+    def HOST(self):
+        host = self.conf.get('default','HOST')
+        return host
+
 config_utils = ConfigUtils()
 
 if __name__ == '__main__':
