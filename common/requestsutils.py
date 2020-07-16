@@ -46,12 +46,20 @@ class RequestUtils:
         # 将取出来的字符串数据去掉字符串标志，请求中需要上送的是字典形式
         param = ast.literal_eval(test_info['请求参数(get)'])
         data = test_info['提交数据（post）']
+        # json = ast.literal_eval(test_info['提交数据（post）'])
         # data = data.encode("utf-8").decode("latin1")
         req_post = self.session.post(url=url,
                                      params=param,
                                      data=data,
+                                     # json=json,
                                      headers=self.headers
                                      )
+        """
+        param参数的数据类型必须是字典类型，test_info['请求参数(get)']取出来的是'{{"access_token":${token}}}'"字符串格式，
+        需要用ast.literal_eval转换一下
+        data参数的数据类型要求是字符串格式
+        json参数的数据类型要求是字典格式
+        """
         req_post.encoding = req_post.apparent_encoding
         if test_info['取值方式'] == 'json取值':
             value = jsonpath.jsonpath(req_post.json(), test_info["取值代码"])[0]
