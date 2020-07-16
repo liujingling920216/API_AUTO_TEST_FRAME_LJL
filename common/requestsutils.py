@@ -1,10 +1,10 @@
 # coding:utf-8
 import re
-
 import jsonpath as jsonpath
 import requests
 import ast
 from common.configutils import config_utils
+from common.checkutils import CheckUtils
 
 
 class RequestUtils:
@@ -31,15 +31,8 @@ class RequestUtils:
             value = re.findall(test_info["取值代码"], req_get.text)[0]
             self.temp_variables[test_info["传值变量"]] = value
             # print(self.temp_variables)
-
-        res_get = {
-            'code': 0,  # 请求是否成功的标志位
-            'response_reason': req_get.reason,
-            'response_code': req_get.status_code,
-            'response_headers': req_get.headers,
-            'response_body': req_get.text
-        }
-        return res_get
+        result = CheckUtils(req_get).run_check(test_info['期望结果类型'],test_info['期望结果'])
+        return result
 
     def __post(self, test_info):
         url = self.host + test_info['请求地址']
@@ -68,14 +61,8 @@ class RequestUtils:
             value = re.findall(test_info["取值代码"], req_post.text)[0]
             self.temp_variables[test_info["传值变量"]] = value
         req_post.encoding = req_post.apparent_encoding
-        res_post = {
-            'code': 0,  # 请求是否成功的标志位
-            'response_reason': req_post.reason,
-            'response_code': req_post.status_code,
-            'response_headers': req_post.headers,
-            'response_body': req_post.text
-        }
-        return res_post
+        result = CheckUtils(req_post).run_check(test_info["期望结果类型"],test_info["期望结果"])
+        return result
 
     # 将请求方式进行封装
     def request(self, test_info):
@@ -113,11 +100,6 @@ class RequestUtils:
 
 if __name__ == '__main__':
     request_util = RequestUtils()
-    case_info = [
-        {'请求方式': 'get', '请求地址': '/cgi-bin/token',
-         '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}',
-         '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token'},
-        {'请求方式': 'post', '请求地址': '/cgi-bin/tags/delete', '请求参数(get)': '{"access_token":${token}}',
-         '提交数据（post）': '{"tag":{"id":459}}', '取值方式': '无', '传值变量': '', '取值代码': ''}
-    ]
+    case_info = [{'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': '正则匹配', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}'},
+                 {'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '删除标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/delete', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag":{"id":408}}', '取值方式': '无', '传值变量': '', '取值代码': '', '期望结果类型': 'json键值对', '期望结果': '{"errcode":0,"errmsg":"ok"}'}]
     case = request_util.test_steps(case_info)
