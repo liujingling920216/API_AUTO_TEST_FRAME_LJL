@@ -94,7 +94,7 @@ class RequestUtils:
             result = self.request(step)
             if result['code'] != 0:
                 break
-            print(result['response_body'])
+            print(result)
         return result
 
 
