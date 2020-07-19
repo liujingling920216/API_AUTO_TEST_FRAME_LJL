@@ -31,7 +31,7 @@ class CheckUtils:
             'message':''
         }
 
-    def no_check(self):
+    def no_check(self,expect_value=None):
         return True
 
     def check_regexp(self,expect_value=None):
@@ -49,7 +49,7 @@ class CheckUtils:
         expect_value_list = expect_value.split(",")
         result = True
         for key in expect_value_list:
-            if key in self.acture_value.keys():
+            if key in self.acture_value.json().keys():
                 check_result.append(result)
             else:
                 result =  False
