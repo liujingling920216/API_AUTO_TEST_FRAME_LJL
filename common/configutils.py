@@ -30,6 +30,36 @@ class ConfigUtils:
         host = self.conf.get('default','HOST')
         return host
 
+    @property
+    def SMTP_SERVER(self):
+        smtp_server_value = self.conf.get('email', 'smtp_server')
+        return smtp_server_value
+
+    @property
+    def SMTP_SENDER(self):
+        smtp_sender_value = self.conf.get('email', 'smtp_sender')
+        return smtp_sender_value
+
+    @property
+    def SMTP_PASSWORD(self):
+        smtp_password_value = self.conf.get('email', 'smtp_password')
+        return smtp_password_value
+
+    @property
+    def SMTP_RECEIVER(self):
+        smtp_receiver_value = self.conf.get('email', 'smtp_receiver')
+        return smtp_receiver_value
+
+    @property
+    def SMTP_CC(self):
+        smtp_cc_value = self.conf.get('email', 'smtp_cc')
+        return smtp_cc_value
+
+    @property
+    def SMTP_SUBJECT(self):
+        smtp_subject_value = self.conf.get('email', 'smtp_subject')
+        return smtp_subject_value
+
 config_utils = ConfigUtils()
 
 if __name__ == '__main__':
