@@ -16,6 +16,17 @@ class ConfigUtils:
         return test_case_data_path
 
     @property
+    def REPORT_PATH(self):
+        report_path = self.conf.get('path','TEST_REPORT')
+        return report_path
+
+    @property
+    def TEST_CASE_PATH(self):
+        test_case_path = self.conf.get('path','TEST_CASE_PATH')
+        return test_case_path
+
+
+    @property
     def LOG_PATH(self):
         log_path = self.conf.get('path','LOG_PATH')
         return log_path

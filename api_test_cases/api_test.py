@@ -19,7 +19,8 @@ class TestCase(paramunittest.ParametrizedTestCase):
         self.case_info = case_info
 
     def test_case(self):
-        RequestUtils().test_steps(self.case_info)
+        actual_result = RequestUtils().test_steps(self.case_info)
+        self.assertTrue(actual_result.get('check_result'), actual_result.get('message'))
 
 if __name__ == '__main__':
     unittest.main()

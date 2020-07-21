@@ -117,7 +117,7 @@ class RequestUtils:
     def test_steps(self, test_info):
         for step in test_info:
             result = self.request(step)
-            print(result)
+            # print(result)
             if result['code'] != 0:
                 # print(result)
                 break
@@ -127,18 +127,23 @@ class RequestUtils:
 
 if __name__ == '__main__':
     request_util = RequestUtils()
-    case_info1 = [{'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': 'json键是否存在', '期望结果': 'access_token,expires_in'},
-                 {'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '请求方式': 'get', '请求地址': '/cgi-bin/tags/get', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '', '取值方式': '无', '传值变量': '', '取值代码': '', '期望结果类型': '正则匹配', '期望结果': '{"id":(.+?),"name":"铁甲小宝"'}]
+    # case_info1 = [{'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': 'json键是否存在', '期望结果': 'access_token,expires_in'},
+    #              {'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '请求方式': 'get', '请求地址': '/cgi-bin/tags/get', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '', '取值方式': '无', '传值变量': '', '取值代码': '', '期望结果类型': '正则匹配', '期望结果': '{"id":(.+?),"name":"铁甲小宝"'}]
 
     # case_info2 = [{'测试用例编号': 'case02', '测试用例名称': '测试能否正确新增用户标签并且修改标签', '用例执行': '否', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': '正则匹配', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}'},
     #              {'测试用例编号': 'case02', '测试用例名称': '测试能否正确新增用户标签并且修改标签', '用例执行': '否', '测试用例步骤': 'step_02', '接口名称': '创建标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/create', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag" : {"name" : "衡东023"}}', '取值方式': 'json取值', '传值变量': 'tagid', '取值代码': '$.tag.id', '期望结果类型': '正则匹配', '期望结果': '{"tag":{"id":(.+?),"name":"衡东023"}}'},
     #              {'测试用例编号': 'case02', '测试用例名称': '测试能否正确新增用户标签并且修改标签', '用例执行': '否', '测试用例步骤': 'step_03', '接口名称': '修改标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/update', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag" : {"id" : ${tagid}, "name" : "广东"   } }', '取值方式': '正则取值', '传值变量': '', '取值代码': '', '期望结果类型': 'json键值对', '期望结果': '{"errcode":0,"errmsg":"ok"}'}]# case_info = [{'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': '正则匹配', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}'},
 
-    case_info3 = [{'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': '正则匹配', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}'},
-                 {'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '创建标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/create', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag" : {"name" : "祝融峰2"}}', '取值方式': 'json取值', '传值变量': 'tagid', '取值代码': '$.tag.id', '期望结果类型': '正则匹配', '期望结果': '{"tag":{"id":(.+?),"name":"祝融峰2"}}'},
-                 {'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_03', '接口名称': '删除标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/delete', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag":{"id":${tagid}}}', '取值方式': '正则取值', '传值变量': '', '取值代码': '', '期望结果类型': 'json键值对', '期望结果': '{"errcode":0,"errmsg":"ok"}'}]
+    # case_info3 = [{'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': '正则匹配', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}'},
+    #              {'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '创建标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/create', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag" : {"name" : "祝融峰2"}}', '取值方式': 'json取值', '传值变量': 'tagid', '取值代码': '$.tag.id', '期望结果类型': '正则匹配', '期望结果': '{"tag":{"id":(.+?),"name":"祝融峰2"}}'},
+    #              {'测试用例编号': 'case03', '测试用例名称': '测试能否正确删除用户标签', '用例执行': '是', '测试用例步骤': 'step_03', '接口名称': '删除标签接口', '请求方式': 'post', '请求地址': '/cgi-bin/tags/delete', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '{"tag":{"id":${tagid}}}', '取值方式': '正则取值', '传值变量': '', '取值代码': '', '期望结果类型': 'json键值对', '期望结果': '{"errcode":0,"errmsg":"ok"}'}]
 
-    case_infos = [case_info1,case_info3]
+    case_info4 = [{'请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx3465fb2ad43d9bb8","secret":"a940067445269e2f8549ddae17808ff6"}', '用例执行': '是', '取值代码': '$.access_token', '请求方式': 'get', '取值方式': 'json取值', '接口名称': '获取access_token接口', '传值变量': 'token', '期望结果类型': '正则匹配', '测试用例名称': '测试获取标签下粉丝列表', '期望结果': '{"access_token":"(.+?)","expires_in":(.+?)}', '提交数据（post）': '', '测试用例编号': 'case04', '测试用例步骤': 'step_01'},
+                  {'请求地址': '/cgi-bin/tags/get', '请求参数(get)': '{"access_token":${token}}', '用例执行': '是', '取值代码': '$.tags[2].id', '请求方式': 'get', '取值方式': 'json取值', '接口名称': '获取公众号已创建的标签', '传值变量': 'tag_id', '期望结果类型': '正则匹配', '测试用例名称': '测试获取标签下粉丝列表', '期望结果': '{"id":(.+?),"name":"(.+?)","count":(.+?)}', '提交数据（post）': '', '测试用例编号': 'case04', '测试用例步骤': 'step_02'},
+                  {'请求地址': '/cgi-bin/user/tag/get', '请求参数(get)': '{"access_token":${token}}', '用例执行': '是', '取值代码': '', '请求方式': 'post', '取值方式': '无', '接口名称': '获取标签下粉丝列表', '传值变量': '', '期望结果类型': '正则匹配', '测试用例名称': '测试获取标签下粉丝列表', '期望结果': '{"count":(.+?),"data":{"openid":["(.+?)"]},"next_openid":"(.+?)"}', '提交数据（post）': '{"tagid":${tag_id},"next_openid":""} ', '测试用例编号': 'case04', '测试用例步骤': 'step_03'}]
+    case = request_util.test_steps(case_info4)
+    print(case)
 
-    for case_info in case_infos:
-        case = request_util.test_steps(case_info)
+    # for case_info in case_infos:
+    #     case = request_util.test_steps(case_info)
+    #     print(case)

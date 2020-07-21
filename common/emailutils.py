@@ -40,7 +40,7 @@ class EmailUtils():
 
 if __name__ == '__main__':
     mail_body = '<h3 align="center">自动化测试报告</h3>'
-    attach_path = os.path.dirname(__file__) + '/../test_reports/P1P2接口自动化测试报告V1.4/P1P2接口自动化测试报告V1.4.html'
+    attach_path = os.path.dirname(__file__) + '/../reports/P1P2接口自动化测试报告V1.4/P1P2接口自动化测试报告V1.4.html'
     EmailUtils(mail_body,attach_path).send_mail()
 
 

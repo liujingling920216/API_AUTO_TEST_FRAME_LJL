@@ -19,7 +19,7 @@ msg['To'] = reciever
 msg['Cc'] = cc
 msg['Subject'] = subject
 
-html_path = os.path.dirname(__file__)+'/../test_reports/P1P2接口自动化测试报告V1.4/P1P2接口自动化测试报告V1.4.html'
+html_path = os.path.dirname(__file__)+'/../reports/P1P2接口自动化测试报告V1.4/P1P2接口自动化测试报告V1.4.html'
 print(os.path.basename(html_path))   #获取文件名称
 
 
