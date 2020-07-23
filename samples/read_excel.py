@@ -1,12 +1,15 @@
+# encoding: utf-8
 import os
 import xlrd
 
 current_path = os.path.dirname(__file__)
-excel_path = os.path.join(current_path,'data//test_case.xlsx')
+# print(current_path)
+excel_path = os.path.join(current_path,'data/test_data.xlsx')
+# print(excel_path)
 
 wb = xlrd.open_workbook(excel_path)
 ws = wb.sheet_by_name('Sheet1')
-mergecells = ws.merged_cells
+mergecells = ws.merged_cells    # 返回一个列表  起始行，结束行，起始列，结束列
 print(mergecells)
 
 
