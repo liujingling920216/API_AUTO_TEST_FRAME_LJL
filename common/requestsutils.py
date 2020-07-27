@@ -7,6 +7,7 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import RequestException
 from common.configutils import config_utils
 from common.checkutils import CheckUtils
+from common.testdatatransferutils import TestDataTransferUtils
 
 
 class RequestUtils:
@@ -52,7 +53,7 @@ class RequestUtils:
             # 将取出来的字符串数据去掉字符串标志，请求中需要上送的是字典形式
             param = ast.literal_eval(test_info['请求参数(get)'])
             data = test_info['提交数据（post）']
-            # json = ast.literal_eval(test_info['提交数据（post）'])
+            json = ast.literal_eval(test_info['提交数据（post）'])
             # data = data.encode("utf-8").decode("latin1")
             data = data.encode('utf-8')
             req_post = self.session.post(url=url,
@@ -119,25 +120,16 @@ class RequestUtils:
             result = self.request(step)
             # print(result)
             if result['code'] != 0:
-                # print(result)
+                TestDataTransferUtils().write_test_result_to_excel(test_info["测试用例编号"], test_info['测试用例步骤'], "失败")
                 break
-            # print(result)
+            else:
+                TestDataTransferUtils().write_test_result_to_excel(test_info["测试用例编号"], test_info['测试用例步骤'], "成功")
         return result
 
 
 if __name__ == '__main__':
     request_util = RequestUtils()
-    case_info = [{'提交数据（post）': '', '接口名称': '获取access_token接口', '用例执行': '是', '期望结果': 'access_token,expires_in',
-                  '测试用例名称': '测试能否正确获取公众号已创建的标签', '测试用例步骤': 'step_01', '请求地址': '/cgi-bin/token',
-                  '取值代码': '$.access_token', '传值变量': 'token', '取值方式': 'json取值', '请求方式': 'get',
-                  '请求参数(get)': '{"grant_type":"client_credential","appid":"wx3465fb2ad43d9bb8","secret":"a940067445269e2f8549ddae17808ff6"}',
-                  '测试用例编号': 'case01', '期望结果类型': 'json键是否存在'}, {'提交数据（post）': '', '接口名称': '获取公众号已创建的标签', '用例执行': '是',
-                                                               '期望结果': '{"id":(.+?),"name":"(.+?)","count":(.+?)}',
-                                                               '测试用例名称': '测试能否正确获取公众号已创建的标签', '测试用例步骤': 'step_02',
-                                                               '请求地址': '/cgi-bin/tags/get', '取值代码': '$.tags[2].id',
-                                                               '传值变量': '', '取值方式': '无', '请求方式': 'get',
-                                                               '请求参数(get)': '{"access_token":${token}}',
-                                                               '测试用例编号': 'case01', '期望结果类型': '正则匹配'}]
+    case_info = [{'case_name': 'case01', 'case_info': [{'用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '期望结果': 'access_token,expires_in', '取值方式': 'json取值', '请求地址': '/cgi-bin/token', '测试用例编号': 'case01', '取值代码': '$.access_token', '传值变量': 'token', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': 'json键是否存在', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx3465fb2ad43d9bb8","secret":"a940067445269e2f8549ddae17808ff6"}', '请求方式': 'get'}, {'用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '期望结果': '{"id":(.+?),"name":"(.+?)","count":(.+?)}', '取值方式': '无', '请求地址': '/cgi-bin/tags/get', '测试用例编号': 'case01', '取值代码': '$.tags[2].id', '传值变量': '', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': '正则匹配', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"access_token":${token}}', '请求方式': 'get'}]}]
     # case_info1 = [{'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': 'json键是否存在', '期望结果': 'access_token,expires_in'},
     #              {'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '请求方式': 'get', '请求地址': '/cgi-bin/tags/get', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '', '取值方式': '无', '传值变量': '', '取值代码': '', '期望结果类型': '正则匹配', '期望结果': '{"id":(.+?),"name":"铁甲小宝"'}]
 
