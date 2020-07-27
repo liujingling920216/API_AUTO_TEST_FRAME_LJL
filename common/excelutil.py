@@ -60,13 +60,13 @@ class ExcelUtils:
 
     def update_excel_result(self,row_index,col_index,result):
         new_wb = copy(self.wb)
-        ws = new_wb.get_sheet(self.wb.sheet_names().index('Sheet1'))
+        ws = new_wb.get_sheet(self.wb.sheet_names().index(self.sheet_name))
         ws.write(row_index,col_index,result)
         new_wb.save(self.excel_path)
 
     def clear_excel_result(self,start_result_id,end_result_id,col_id):
         new_wb = copy(self.wb)
-        ws = new_wb.get_sheet(self.wb.sheet_names().index('Sheet1'))
+        ws = new_wb.get_sheet(self.wb.sheet_names().index(self.sheet_name))
         for i in range(start_result_id,end_result_id):
             ws.write(i,col_id,'')
         new_wb.save(self.excel_path)

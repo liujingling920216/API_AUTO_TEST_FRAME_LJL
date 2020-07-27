@@ -91,7 +91,7 @@ class RequestUtils:
     def request(self, test_info):
         try:
             # print(self.temp_variables)
-            request_method = test_info['请求方式']
+            request_method = test_info["请求方式"]
             param_variable_list = re.findall('\\${\w+}', test_info["请求参数(get)"])
             if param_variable_list:
                 for param_variable in param_variable_list:
@@ -111,7 +111,7 @@ class RequestUtils:
             else:
                 result = {'code': 1, 'result': '请求方式不支持'}
         except Exception as e:
-            result = {'code':4,'result':'用例编号[%s]的[%s]步骤出现系统异常，原因：%s'%(test_info['测试用例编号'],test_info["测试用例步骤"],e.__str__())}
+            result = {'code':4,'result':'用例编号[%s]的[%s]步骤出现系统异常，原因：%s'%(test_info["测试用例编号"],test_info["测试用例步骤"],e.__str__())}
         return result
 
     # 封装一个案例多个步骤
@@ -120,16 +120,17 @@ class RequestUtils:
             result = self.request(step)
             # print(result)
             if result['code'] != 0:
-                TestDataTransferUtils().write_test_result_to_excel(test_info["测试用例编号"], test_info['测试用例步骤'], "失败")
+                TestDataTransferUtils().write_test_result_to_excel(step["测试用例编号"], step['测试用例步骤'], "失败")
                 break
             else:
-                TestDataTransferUtils().write_test_result_to_excel(test_info["测试用例编号"], test_info['测试用例步骤'], "成功")
+                TestDataTransferUtils().write_test_result_to_excel(step["测试用例编号"], step['测试用例步骤'])
         return result
 
 
 if __name__ == '__main__':
     request_util = RequestUtils()
-    case_info = [{'case_name': 'case01', 'case_info': [{'用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '期望结果': 'access_token,expires_in', '取值方式': 'json取值', '请求地址': '/cgi-bin/token', '测试用例编号': 'case01', '取值代码': '$.access_token', '传值变量': 'token', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': 'json键是否存在', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx3465fb2ad43d9bb8","secret":"a940067445269e2f8549ddae17808ff6"}', '请求方式': 'get'}, {'用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '期望结果': '{"id":(.+?),"name":"(.+?)","count":(.+?)}', '取值方式': '无', '请求地址': '/cgi-bin/tags/get', '测试用例编号': 'case01', '取值代码': '$.tags[2].id', '传值变量': '', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': '正则匹配', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"access_token":${token}}', '请求方式': 'get'}]}]
+    case_info = [{'用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '期望结果': 'access_token,expires_in', '取值方式': 'json取值', '请求地址': '/cgi-bin/token', '测试用例编号': 'case01', '取值代码': '$.access_token', '传值变量': 'token', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': 'json键是否存在', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx3465fb2ad43d9bb8","secret":"a940067445269e2f8549ddae17808ff6"}', '请求方式': 'get'},
+                 {'用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '期望结果': '{"id":(.+?),"name":"(.+?)","count":(.+?)}', '取值方式': '无', '请求地址': '/cgi-bin/tags/get', '测试用例编号': 'case01', '取值代码': '$.tags[2].id', '传值变量': '', '提交数据（post）': '', '测试结果': 'ok', '期望结果类型': '正则匹配', '测试用例名称': '测试能否正确获取公众号已创建的标签', '请求参数(get)': '{"access_token":${token}}', '请求方式': 'get'}]
     # case_info1 = [{'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_01', '接口名称': '获取access_token接口', '请求方式': 'get', '请求地址': '/cgi-bin/token', '请求参数(get)': '{"grant_type":"client_credential","appid":"wx55614004f367f8ca","secret":"65515b46dd758dfdb09420bb7db2c67f"}', '提交数据（post）': '', '取值方式': 'json取值', '传值变量': 'token', '取值代码': '$.access_token', '期望结果类型': 'json键是否存在', '期望结果': 'access_token,expires_in'},
     #              {'测试用例编号': 'case01', '测试用例名称': '测试能否正确获取公众号已创建的标签', '用例执行': '是', '测试用例步骤': 'step_02', '接口名称': '获取公众号已创建的标签', '请求方式': 'get', '请求地址': '/cgi-bin/tags/get', '请求参数(get)': '{"access_token":${token}}', '提交数据（post）': '', '取值方式': '无', '传值变量': '', '取值代码': '', '期望结果类型': '正则匹配', '期望结果': '{"id":(.+?),"name":"铁甲小宝"'}]
 

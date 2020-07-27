@@ -47,7 +47,7 @@ class TestDataTransferUtils:
                 break
         return col_id
 
-    def write_test_result_to_excel(self,case_id,case_step,result):
+    def write_test_result_to_excel(self,case_id,case_step,result='通过'):
         row_id = self.get_row_index(case_id,case_step)
         col_id = self.get_col_index()
         self.test_data_sheet.update_excel_result(row_id,col_id,result)
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     # col_index = testdatatransferutils.get_col_index()
     # print(col_index)
     testdatatransferutils.write_test_result_to_excel('case02','step_01','pass')
-    # testdatatransferutils.clear_test_result_from_excel()
+
 
 
 
