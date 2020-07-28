@@ -113,8 +113,10 @@ class RequestUtils:
                 result = self.__post(test_info)
             else:
                 result = {'code': 1, 'result': '请求方式不支持'}
+                logger.error('请求方式不支持')
         except Exception as e:
             result = {'code':4,'result':'用例编号[%s]的[%s]步骤出现系统异常，原因：%s'%(test_info["测试用例编号"],test_info["测试用例步骤"],e.__str__())}
+            logger.error('用例编号[%s]的[%s]步骤出现系统异常，原因：%s'%(test_info["测试用例编号"],test_info["测试用例步骤"],e.__str__()))
         return result
 
     # 封装一个案例多个步骤

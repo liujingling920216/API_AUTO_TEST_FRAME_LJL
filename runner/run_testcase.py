@@ -1,5 +1,6 @@
 import os
 import unittest
+from nb_log import LogManager
 from common import HTMLTestReportCN
 from common.configutils import config_utils
 from common.emailutils import EmailUtils
@@ -7,6 +8,7 @@ from common.emailutils import EmailUtils
 current_path = os.path.dirname(__file__)
 report_path = os.path.join(current_path,'..',config_utils.REPORT_PATH)
 test_case_path = os.path.join(current_path,'..',config_utils.TEST_CASE_PATH)
+logger = LogManager(__file__).get_logger_and_add_handlers()
 
 class RunCase:
     def __init__(self):
@@ -22,6 +24,7 @@ class RunCase:
                                                        top_level_dir=self.test_case_path)
         all_suite =unittest.TestSuite()
         all_suite.addTests(discover)
+        logger.info('加载所有的测试模块及方法到测试套件')
         return all_suite
 
     def run(self):
@@ -29,6 +32,7 @@ class RunCase:
         report_dir.create_dir(self.title)
         report_file_path = HTMLTestReportCN.GlobalMsg.get_value('report_path')
         fp = open(report_file_path, 'wb')
+        logger.info('初始化创建测试报告路径：%s' % report_file_path)
         runner = HTMLTestReportCN.HTMLTestRunner(stream=fp,
                                                  title=self.title,
                                                  description=self.description,
