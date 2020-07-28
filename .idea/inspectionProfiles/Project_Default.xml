@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="auto_unittest.day15.exercise.testcase.test_login.day15" />
+          <option value="common.requestsutils.nb_log" />
         </list>
       </option>
     </inspection_tool>
