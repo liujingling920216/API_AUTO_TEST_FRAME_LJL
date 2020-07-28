@@ -10,8 +10,8 @@ from common.checkutils import CheckUtils
 from common.testdatatransferutils import TestDataTransferUtils
 from nb_log import LogManager
 
-logger = LogManager(__file__).get_logger_and_add_handles()
 
+logger = LogManager(__file__).get_logger_and_add_handlers()
 
 class RequestUtils:
     def __init__(self):

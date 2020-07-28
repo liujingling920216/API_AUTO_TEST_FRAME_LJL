@@ -14,7 +14,7 @@ class RunCase:
     def __init__(self):
         self.test_case_path = test_case_path
         self.report_path = report_path
-        self.title = '刘惊玲接口自动化测试测试报告'
+        self.title = '刘惊玲接口自动化测试报告'
         self.description = '接口自动化框架'
         self.tester = 'sophia.liu'
 

@@ -23,7 +23,7 @@ class TestCase(paramunittest.ParametrizedTestCase):
         self.case_info = case_info
 
     def test_case(self):
-        logger.info('测试用例：%s 开始执行'%(self.case_info[0].get('测试用例编号')))
+        logger.info('测试用例：%s开始执行'%(self.case_info[0].get('测试用例编号')))
         self._testMethodDoc = self.case_info[0].get('测试用例名称')
         self._testMethodName =self.case_info[0].get('测试用例编号')
         actual_result = RequestUtils().test_steps(self.case_info)
