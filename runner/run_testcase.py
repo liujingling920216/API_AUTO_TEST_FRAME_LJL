@@ -20,7 +20,7 @@ class RunCase:
 
     def load_test(self):
         discover = unittest.defaultTestLoader.discover(start_dir=self.test_case_path,
-                                                       pattern='api_test.py',
+                                                       pattern='api_test1.py',
                                                        top_level_dir=self.test_case_path)
         all_suite =unittest.TestSuite()
         all_suite.addTests(discover)

@@ -16,7 +16,8 @@ class TestDataTransferUtils:
         test_data_dic = {}
         for r in self.test_data:
             "r是excel表中某一行数据"
-            test_data_dic.setdefault(r["测试用例编号"], []).append(r)
+            if r['用例执行']=='是':  #用例执行标示是的情况加载到字典
+                test_data_dic.setdefault(r["测试用例编号"], []).append(r)
         return test_data_dic
     """
     得到如下字典格式：
